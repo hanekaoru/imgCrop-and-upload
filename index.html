@@ -64,6 +64,7 @@
             reader.readAsDataURL(file);
             reader.onload = function (e) {
 
+                // 裁剪层
                 layer.open({
                     type: 1,
                     title: false,
@@ -83,22 +84,25 @@
                     maxHeight: "100%"
                 })
 
+                // 解决 change-file 只能触发一次，替换+重新绑定事件
                 $('#uploadFile').replaceWith('<input type="file" id="uploadFile" name="file" aa>');
 
                 $("#uploadFile").on("change", function () {
                     readAsDataURL();
                 })
 
+                // 得到的 base64 就在 e.target.result 里面
                 $(".imgContainer img").attr("src", e.target.result)
 
                 var $image = $('.imgContainer img');
 
                 $image.on("load", function () {        // 等待图片加载成功后，才进行图片的裁剪功能  
                     $image.cropper({
-                        aspectRatio: 16 / 9  　　// 1：1 的比例进行裁剪，可以是任意比例，自己调整  
+                        aspectRatio: 16 / 9  　　// 裁剪比例  
                     });
                 })
 
+                // 裁剪事件
                 $(".btn").on("click", function () {
                     var src = $image.eq(0).attr("src");
                     var canvasdata = $image.cropper("getCanvasData");
@@ -119,13 +123,14 @@
         }
 
         function convertToData(url, canvasdata, cropdata, callback) {
+
             var cropw = cropdata.width; // 剪切的宽  
             var croph = cropdata.height; // 剪切的宽  
             var imgw = canvasdata.width; // 图片缩放或则放大后的高  
             var imgh = canvasdata.height; // 图片缩放或则放大后的高  
 
-            var poleft = canvasdata.left - cropdata.left; // canvas定位图片的左边位置  
-            var potop = canvasdata.top - cropdata.top; // canvas定位图片的上边位置  
+            var poleft = canvasdata.left - cropdata.left; // canvas 定位图片的左边位置  
+            var potop = canvasdata.top - cropdata.top; // canvas 定位图片的上边位置  
 
             var canvas = document.createElement("canvas");
             var ctx = canvas.getContext('2d');
@@ -139,10 +144,10 @@
             img.onload = function () {
                 this.width = imgw;
                 this.height = imgh;
-                // 这里主要是懂得canvas与图片的裁剪之间的关系位置  
+                // canvas 与图片的裁剪之间的关系位置  
                 ctx.drawImage(this, poleft, potop, this.width, this.height);
-                var base64 = canvas.toDataURL('image/jpg', 1);  // 这里的“1”是指的是处理图片的清晰度（0-1）之间，当然越小图片越模糊，处理后的图片大小也就越小  
-                callback && callback(base64)      // 回调base64字符串  
+                var base64 = canvas.toDataURL('image/jpg', 1);  // 这里的 "1" 是指的是处理图片的清晰度（0-1）之间，当然越小图片越模糊，处理后的图片大小也就越小  
+                callback && callback(base64)      // 回调 base64 字符串  
             }
         }
     })
