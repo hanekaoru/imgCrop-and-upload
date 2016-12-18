@@ -33,6 +33,7 @@
     <div class="cover">
         <input type="file" id="uploadFile" name="file">
         <span class="imgTitle">添加封面</span>
+        <!-- 如果不隐藏，则会有默认的灰色边框 -->
         <img id="newImg" style="display: none;">
     </div>
 
@@ -60,8 +61,8 @@
             }
 
             var reader = new FileReader();
-
             reader.readAsDataURL(file);
+            
             reader.onload = function (e) {
 
                 // 裁剪层
