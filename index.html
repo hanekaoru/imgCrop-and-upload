@@ -93,23 +93,24 @@
                     readAsDataURL();
                 })
 
-                // 得到的 base64 就在 e.target.result 里面
+                // onload 后得到的 base64 地址在 e.target.result 里面
                 $(".imgContainer img").attr("src", e.target.result)
 
                 var $image = $('.imgContainer img');
 
-                $image.on("load", function () {        // 等待图片加载成功后，才进行图片的裁剪功能  
+                $image.on("load", function () {        // 等待图片加载成功后进行图片的裁剪功能  
                     $image.cropper({
                         aspectRatio: 16 / 9  　　// 裁剪比例，可以自定义 比如 1 / 1
                     });
                 })
 
-                // 裁剪事件
+                // 裁剪点击事件
                 $(".btn").on("click", function () {
                     var src = $image.eq(0).attr("src");
                     var canvasdata = $image.cropper("getCanvasData");
                     var cropBoxData = $image.cropper('getCropBoxData');
-
+                    
+                    // 赋予新的 img
                     convertToData(src, canvasdata, cropBoxData, function (basechar) {
                         layer.closeAll();
                         $("#newImg").attr("src", basechar).show();
@@ -117,6 +118,7 @@
                     });
                 })
 
+                // 关闭遮罩层
                 $(".Cancle").on("click", function () {
                     layer.closeAll();
                 })
@@ -126,14 +128,15 @@
 
         function convertToData(url, canvasdata, cropdata, callback) {
 
-            var cropw = cropdata.width; // 剪切的宽  
-            var croph = cropdata.height; // 剪切的宽  
-            var imgw = canvasdata.width; // 图片缩放或则放大后的高  
-            var imgh = canvasdata.height; // 图片缩放或则放大后的高  
+            var cropw = cropdata.width;  // 剪切的宽  
+            var croph = cropdata.height;  // 剪切的宽  
+            var imgw = canvasdata.width;  // 图片缩放或则放大后的高  
+            var imgh = canvasdata.height;  // 图片缩放或则放大后的高  
 
-            var poleft = canvasdata.left - cropdata.left; // canvas 定位图片的左边位置  
-            var potop = canvasdata.top - cropdata.top; // canvas 定位图片的上边位置  
+            var poleft = canvasdata.left - cropdata.left;  // canvas 定位图片的左边位置  
+            var potop = canvasdata.top - cropdata.top;  // canvas 定位图片的上边位置  
 
+            // 创建画布
             var canvas = document.createElement("canvas");
             var ctx = canvas.getContext('2d');
 
