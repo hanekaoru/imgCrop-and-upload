@@ -130,6 +130,22 @@
             }
 
         }
+        
+        // 图片上传
+        function imgUpload() {
+
+            $("#myForm").ajaxSubmit({
+                type: "post",
+                url: "",
+                success: function (data) {
+
+                    console.log(data)
+                }
+
+            });
+
+            return false;
+        }
 
         function convertToData(url, canvasdata, cropdata, callback) {
 
