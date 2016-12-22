@@ -14,6 +14,7 @@
 
 <body>
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.form.js"></script>
     <script type='application/javascript' src='fastclick.js'></script>
     <script type="text/javascript" src="js/layer/layer.js"></script>
     <script src="js/cropper.js"></script>
@@ -30,12 +31,16 @@
 <div class="main">
 
 
-    <div class="cover">
-        <input type="file" id="uploadFile" name="file">
-        <span class="imgTitle">添加封面</span>
-        <!-- 如果不隐藏，则会有默认的灰色边框 -->
-        <img id="newImg" style="display: none;">
-    </div>
+    <form enctype="multipart/form-data" method="post" id="myForm" action="">
+
+        <div class="cover">
+            <input type="file" id="uploadFile" name="file">
+            <span class="imgTitle">添加封面</span>
+            <!-- 如果不隐藏，则会有默认的灰色边框 -->
+            <img id="newImg" style="display: none;">
+        </div>
+
+    </form>
 
 </div>
 
