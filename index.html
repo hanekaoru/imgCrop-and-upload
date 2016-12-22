@@ -111,12 +111,17 @@
 
                 // 裁剪点击事件
                 $(".btn").on("click", function () {
+
+                    // 上传
+                    imgUpload();
+
                     var src = $image.eq(0).attr("src");
                     var canvasdata = $image.cropper("getCanvasData");
                     var cropBoxData = $image.cropper('getCropBoxData');
                     
                     // 赋予新的 img
                     convertToData(src, canvasdata, cropBoxData, function (basechar) {
+                        
                         layer.closeAll();
                         $("#newImg").attr("src", basechar).show();
                         $(".imgTitle").hide();
@@ -130,7 +135,7 @@
             }
 
         }
-        
+
         // 图片上传
         function imgUpload() {
 
@@ -146,6 +151,7 @@
 
             return false;
         }
+
 
         function convertToData(url, canvasdata, cropdata, callback) {
 
